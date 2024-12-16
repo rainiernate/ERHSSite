@@ -270,6 +270,74 @@ h2 {
     left: 0;
 }
 
+/* Memories Wall */
+.memories-wall {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.memory-card {
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    height: auto;
+    min-height: 200px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+.memory-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(45, 106, 79, 0.15);
+}
+
+.card-front {
+    padding: 1.5rem;
+    background: var(--white);
+    border-bottom: 2px solid var(--light-green);
+}
+
+.card-front h3 {
+    color: var(--primary-green);
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.memory-year {
+    color: var(--gray-text);
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.card-content {
+    padding: 1.5rem;
+    background: var(--white);
+}
+
+.card-content p {
+    color: var(--dark-text);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.card-content small {
+    color: var(--gray-text);
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .memories-wall {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+}
+
 /* Register Section */
 .register-section {
     background: var(--primary-green);
