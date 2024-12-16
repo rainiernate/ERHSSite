@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Memory submission functionality
     function addMemoryToWall(memory) {
+        const photoHtml = memory.photo ? `<img src="${memory.photo}" alt="Memory photo" class="memory-photo">` : '';
         const newMemoryHtml = `
             <div class="memory-card">
                 <div class="card-front">
@@ -10,8 +11,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="memory-year">${memory.year}</p>
                 </div>
                 <div class="card-content">
+                    ${photoHtml}
                     <p>${memory.description}</p>
-                    <small class="text-muted">Shared on ${memory.date}</small>
+                    <div class="memory-footer">
+                        <small class="text-muted">Shared by ${memory.author} on ${memory.date}</small>
+                    </div>
                 </div>
             </div>
         `;
@@ -33,52 +37,57 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.getElementById('memoryTitle').value;
         const description = document.getElementById('memoryDescription').value;
         const year = document.getElementById('memoryYear').value;
+        const author = document.getElementById('memoryAuthor').value;
+        const photoInput = document.getElementById('memoryPhoto');
 
-        if (!title || !description || !year) {
-            alert('Please fill in all fields');
+        if (!title || !description || !year || !author) {
+            alert('Please fill in all required fields');
             return;
         }
 
-        const memory = {
-            title: title,
-            description: description,
-            year: year,
-            date: new Date().toLocaleDateString()
+        // Handle photo upload
+        const handlePhotoUpload = () => {
+            return new Promise((resolve) => {
+                if (photoInput.files && photoInput.files[0]) {
+                    const file = photoInput.files[0];
+                    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                        alert('Photo size must be less than 5MB');
+                        resolve(null);
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = () => resolve(null);
+                    reader.readAsDataURL(file);
+                } else {
+                    resolve(null);
+                }
+            });
         };
 
-        memories.push(memory);
-        addMemoryToWall(memory);
-        
-        // Clear form and close modal
-        document.getElementById('memoryForm').reset();
-        const memoryModal = document.getElementById('memoryModal');
-        const modal = bootstrap.Modal.getInstance(memoryModal);
-        modal.hide();
+        handlePhotoUpload().then(photoData => {
+            const memory = {
+                title: title,
+                description: description,
+                year: year,
+                author: author,
+                photo: photoData,
+                date: new Date().toLocaleDateString()
+            };
 
-        // Save to localStorage
-        localStorage.setItem('memories', JSON.stringify(memories));
-    });
+            memories.push(memory);
+            addMemoryToWall(memory);
+            
+            // Clear form and close modal
+            document.getElementById('memoryForm').reset();
+            const memoryModal = document.getElementById('memoryModal');
+            const modal = bootstrap.Modal.getInstance(memoryModal);
+            modal.hide();
 
-    // Add some sample memories
-    const sampleMemories = [
-        {
-            title: "First Day at ERHS",
-            description: "Test!",
-            year: "2001",
-            date: "2024-01-15"
-        },
-        {
-            title: "Cafeteria",
-            description: "Food!",
-            year: "2005",
-            date: "2024-01-15"
-        }
-    ];
-
-    // Add sample memories to wall
-    sampleMemories.forEach(memory => {
-        memories.push(memory);
-        addMemoryToWall(memory);
+            // Save to localStorage
+            localStorage.setItem('memories', JSON.stringify(memories));
+        });
     });
 
     // Load existing memories from localStorage
@@ -86,20 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
     storedMemories.forEach(memory => {
         memories.push(memory);
         addMemoryToWall(memory);
-    });
-
-    // Smooth scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
     });
 
     // Navbar background change on scroll

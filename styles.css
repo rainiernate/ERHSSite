@@ -330,6 +330,25 @@ h2 {
     display: block;
 }
 
+.memory-photo {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.memory-footer {
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--light-gray);
+}
+
+.memory-footer small {
+    display: block;
+    color: var(--gray-text);
+}
+
 @media (max-width: 768px) {
     .memories-wall {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

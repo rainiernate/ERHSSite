@@ -153,6 +153,10 @@
                 <div class="modal-body">
                     <form id="memoryForm">
                         <div class="mb-3">
+                            <label for="memoryAuthor" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="memoryAuthor" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="memoryTitle" class="form-label">Title</label>
                             <input type="text" class="form-control" id="memoryTitle" required>
                         </div>
@@ -170,6 +174,11 @@
                                 <option value="2004">Senior (2004)</option>
                                 <option value="2005">Graduation (2005)</option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="memoryPhoto" class="form-label">Photo (optional)</label>
+                            <input type="file" class="form-control" id="memoryPhoto" accept="image/*">
+                            <div class="form-text">Max file size: 5MB</div>
                         </div>
                     </form>
                 </div>
