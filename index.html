@@ -153,27 +153,39 @@
     </section>
 
     <!-- Memory Modal -->
-    <div class="modal fade" id="memoryModal" tabindex="-1">
+    <div class="modal fade" id="memoryModal" tabindex="-1" aria-labelledby="memoryModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Share Your Memory</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="memoryModalLabel">Share Your Memory</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="memoryForm">
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="memoryTitle" placeholder="Title of your memory" required>
+                            <label for="memoryTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="memoryTitle" required>
                         </div>
                         <div class="mb-3">
-                            <textarea class="form-control" id="memoryText" rows="4" placeholder="Share your memory..." required></textarea>
+                            <label for="memoryDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="memoryDescription" rows="4" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="memoryPhoto" class="form-label">Add a photo</label>
-                            <input type="file" class="form-control" id="memoryPhoto" accept="image/*">
+                            <label for="memoryYear" class="form-label">Year</label>
+                            <select class="form-control" id="memoryYear" required>
+                                <option value="">Select Year</option>
+                                <option value="2001">Freshman (2001)</option>
+                                <option value="2002">Sophomore (2002)</option>
+                                <option value="2003">Junior (2003)</option>
+                                <option value="2004">Senior (2004)</option>
+                                <option value="2005">Graduation (2005)</option>
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Share Memory</button>
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="submitMemory">Submit Memory</button>
                 </div>
             </div>
         </div>
@@ -185,6 +197,7 @@
         </div>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
